@@ -242,7 +242,7 @@ TEST(Imgcodecs_Tiff, readWrite_predictor)
         COMPRESSION_NONE,     COMPRESSION_LZW,      COMPRESSION_JPEG,
         COMPRESSION_PACKBITS, COMPRESSION_DEFLATE,  COMPRESSION_ADOBE_DEFLATE
     };
-    for (int i = 0; i < sizeof(methods) / sizeof(int); i++)
+    for (size_t i = 0; i < sizeof(methods) / sizeof(int); i++)
     {
         string out = cv::tempfile(".tif");
 
