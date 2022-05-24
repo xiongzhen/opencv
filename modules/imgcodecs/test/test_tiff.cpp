@@ -221,7 +221,6 @@ TEST(Imgcodecs_Tiff, readWrite_32FC3_RAW)
 
 TEST(Imgcodecs_Tiff, readWrite_predictor)
 {
-    /*
      * see #21871 TIFFTAG_PREDICTOR should not be applied unless LZW, DEFLATE or ADOBE_DEFLATE
      */
     const uchar sample_data[160] = {
@@ -239,7 +238,7 @@ TEST(Imgcodecs_Tiff, readWrite_predictor)
 
     cv::Mat mat(10, 16, CV_8UC1, (void*)sample_data);
     int methods[] = {
-        COMPRESSION_NONE,     COMPRESSION_LZW,      COMPRESSION_JPEG,
+        COMPRESSION_NONE,     COMPRESSION_LZW,
         COMPRESSION_PACKBITS, COMPRESSION_DEFLATE,  COMPRESSION_ADOBE_DEFLATE
     };
     for (size_t i = 0; i < sizeof(methods) / sizeof(int); i++)
@@ -256,6 +255,8 @@ TEST(Imgcodecs_Tiff, readWrite_predictor)
 
         const Mat img = cv::imread(out, IMREAD_UNCHANGED);
         ASSERT_FALSE(img.empty());
+
+        ASSERT_EQ(0, cv::norm(mat, img, cv::NORM_INF));
 
         EXPECT_EQ(0, remove(out.c_str()));
     }
